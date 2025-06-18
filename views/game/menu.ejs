@@ -1,0 +1,41 @@
+<%- include('../partials/header', { user }) %>
+
+    <div class="container mt-5 text-white text-center">
+        <h2>Welcome, <%= user.username %>!</h2>
+
+        <!-- Create Room -->
+        <form action="/game/create-room" method="POST" class="mt-4">
+            <label for="format">Choose Format:</label>
+            <select name="format" class="form-select w-25 mx-auto mb-3" required>
+                <option value="3">BO3</option>
+                <option value="5">BO5</option>
+                <option value="7">BO7</option>
+            </select>
+            <button class="btn btn-success">Create Room</button>
+        </form>
+        <a href="/game/stats" class="btn btn-outline-info">View Champion Stats</a>
+
+        <!-- Room List -->
+        <div class="mt-5">
+            <h4>Available Rooms</h4>
+            <% if (availableRooms.length===0) { %>
+                <p>No available rooms to join.</p>
+                <% } else { %>
+                    <ul class="list-group w-50 mx-auto">
+                        <% availableRooms.forEach(room=> { %>
+                            <li class="list-group-item d-flex justify-content-between align-items-center">
+                                Room: <%= room.roomId %> (BO<%= room.format %>) - <%= room.players.length %>/2
+                                            <% if (room.players.length < 2) { %>
+                                                <form action="/game/join-room" method="POST">
+                                                    <input type="hidden" name="roomId" value="<%= room.roomId %>">
+                                                    <button class="btn btn-primary btn-sm">Join</button>
+                                                </form>
+                                                <% } else { %>
+                                                    <span class="badge bg-secondary">Full</span>
+                                                    <% } %>
+                            </li>
+                            <% }) %>
+                    </ul>
+                    <% } %>
+        </div>
+    </div>

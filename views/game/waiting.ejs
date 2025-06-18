@@ -1,0 +1,28 @@
+<%- include('../partials/header', { user }) %>
+
+    <div class="container text-center mt-5 text-white">
+        <h2>🎮 Room Created</h2>
+        <p>Share this ID with your friend:</p>
+        <h3><strong>
+                <%= roomId %>
+            </strong></h3>
+
+        <button onclick="copyRoomId()" class="btn btn-outline-warning">Copy Room ID</button>
+        <canvas id="qrcode" class="my-3"></canvas>
+
+        <a href="/game/room/<%= roomId %>" class="btn btn-primary mt-3">Enter Room</a>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+    <script>
+        const roomId = "<%= roomId %>";
+        function copyRoomId() {
+            navigator.clipboard.writeText(roomId).then(() => {
+                alert('✅ Room ID copied!');
+            });
+        }
+
+        QRCode.toCanvas(document.getElementById('qrcode'), roomId, function (err) {
+            if (err) console.error(err);
+        });
+    </script>

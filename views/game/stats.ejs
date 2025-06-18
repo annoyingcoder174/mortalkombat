@@ -1,0 +1,51 @@
+<%- include('../partials/header', { user }) %>
+    <div class="container my-3">
+        <input type="text" id="searchInput" class="form-control" placeholder="Search champion by name...">
+    </div>
+
+    <div class="container mt-4">
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-6 g-3">
+            <% champions.forEach(champ=> { %>
+                <div class="col">
+                    <div class="card bg-dark text-white h-100 p-2">
+                        <img src="<%= champ.image %>" class="card-img-top" alt="<%= champ.name %>"
+                            style="object-fit: contain; height: 80px;">
+                        <div class="card-body p-2">
+                            <h6 class="card-title text-center mb-1" style="font-size: 0.9rem;">
+                                <%= champ.name %>
+                            </h6>
+                            <p class="card-text text-center" style="font-size: 0.75rem;">
+                                Picks: <%= champ.totalPicks %><br>
+                                    Bans: <%= champ.totalBans %><br>
+                                        Win Rate:
+                                        <%= champ.totalPicks> 0 ? ((champ.totalWins / champ.totalPicks) *
+                                            100).toFixed(1) : '0.0' %>%<br>
+                                            Pick Rate:
+                                            <%= champ.totalGames> 0 ? ((champ.totalPicks / champ.totalGames) *
+                                                100).toFixed(1) : '0.0' %>%<br>
+                                                Ban Rate:
+                                                <%= champ.totalGames> 0 ? ((champ.totalBans / champ.totalGames) *
+                                                    100).toFixed(1) : '0.0' %>%<br>
+                                                    Ban+Pick Rate:
+                                                    <%= champ.totalGames> 0 ? (((champ.totalBans + champ.totalPicks) /
+                                                        champ.totalGames) * 100).toFixed(1) : '0.0' %>%
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <% }); %>
+        </div>
+    </div>
+
+
+    <script>
+        document.getElementById('searchInput').addEventListener('input', function () {
+            const term = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const name = card.querySelector('.card-title').textContent.toLowerCase();
+                card.parentElement.style.display = name.includes(term) ? '' : 'none';
+            });
+        });
+    </script>
