@@ -1,13 +1,8 @@
 [
     {
-        "champId": "alien",
-        "name": "Alien",
-        "image": "/images/alien.png"
-    },
-    {
-        "champId": "bo-rai-cho",
-        "name": "Bo' Rai Cho",
-        "image": "/images/bo-rai-cho.png"
+        "champId": "baraka",
+        "name": "Baraka",
+        "image": "/images/baraka.png"
     },
     {
         "champId": "cassie-cage",
@@ -15,14 +10,14 @@
         "image": "/images/cassie-cage.png"
     },
     {
-        "champId": "dvorah",
-        "name": "D'Vorah",
-        "image": "/images/dvorah.png"
+        "champId": "cetrion",
+        "name": "Cetrion",
+        "image": "/images/cetrion.png"
     },
     {
-        "champId": "ermac",
-        "name": "Ermac",
-        "image": "/images/ermac.png"
+        "champId": "dvorah",
+        "name": "D'Vorah",
+        "image": "/images/d'vorah.png"
     },
     {
         "champId": "erron-black",
@@ -30,14 +25,19 @@
         "image": "/images/erron-black.png"
     },
     {
-        "champId": "ferra-torr",
-        "name": "Ferra/Torr",
-        "image": "/images/ferra-torr.png"
+        "champId": "frost",
+        "name": "Frost",
+        "image": "/images/frost.png"
     },
     {
-        "champId": "goro",
-        "name": "Goro",
-        "image": "/images/goro.png"
+        "champId": "fujin",
+        "name": "Fujin",
+        "image": "/images/fujin.png"
+    },
+    {
+        "champId": "geras",
+        "name": "Geras",
+        "image": "/images/geras.png"
     },
     {
         "champId": "jacqui-briggs",
@@ -45,9 +45,9 @@
         "image": "/images/jacqui-briggs.png"
     },
     {
-        "champId": "jason",
-        "name": "Jason Voorhees",
-        "image": "/images/jason.png"
+        "champId": "jade",
+        "name": "Jade",
+        "image": "/images/jade.png"
     },
     {
         "champId": "jax",
@@ -55,9 +55,19 @@
         "image": "/images/jax.png"
     },
     {
+        "champId": "john-rambo",
+        "name": "John Rambo",
+        "image": "/images/john-rambo.png"
+    },
+    {
         "champId": "johnny-cage",
         "name": "Johnny Cage",
-        "image": "/images/johnny-cage.png"
+        "image": "/images/johny-cage.png"
+    },
+    {
+        "champId": "kabal",
+        "name": "Kabal",
+        "image": "/images/kabal.png"
     },
     {
         "champId": "kano",
@@ -65,14 +75,14 @@
         "image": "/images/kano.png"
     },
     {
-        "champId": "kenshi",
-        "name": "Kenshi",
-        "image": "/images/kenshi.png"
-    },
-    {
         "champId": "kitana",
         "name": "Kitana",
         "image": "/images/kitana.png"
+    },
+    {
+        "champId": "kollector",
+        "name": "Kollector",
+        "image": "/images/kollector.png"
     },
     {
         "champId": "kotal-kahn",
@@ -80,19 +90,9 @@
         "image": "/images/kotal-kahn.png"
     },
     {
-        "champId": "kung-jin",
-        "name": "Kung Jin",
-        "image": "/images/kung-jin.png"
-    },
-    {
         "champId": "kung-lao",
         "name": "Kung Lao",
         "image": "/images/kung-lao.png"
-    },
-    {
-        "champId": "leatherface",
-        "name": "Leatherface",
-        "image": "/images/leatherface.png"
     },
     {
         "champId": "liu-kang",
@@ -105,14 +105,14 @@
         "image": "/images/mileena.png"
     },
     {
-        "champId": "predator",
-        "name": "Predator",
-        "image": "/images/predator.png"
+        "champId": "nightwolf",
+        "name": "Nightwolf",
+        "image": "/images/nightwolf.png"
     },
     {
-        "champId": "quan-chi",
-        "name": "Quan Chi",
-        "image": "/images/quan-chi.png"
+        "champId": "noob-saibot",
+        "name": "Noob Saibot",
+        "image": "/images/noob-saibot.png"
     },
     {
         "champId": "raiden",
@@ -120,9 +120,14 @@
         "image": "/images/raiden.png"
     },
     {
-        "champId": "reptile",
-        "name": "Reptile",
-        "image": "/images/reptile.png"
+        "champId": "rain",
+        "name": "Rain",
+        "image": "/images/rain.png"
+    },
+    {
+        "champId": "robocop",
+        "name": "RoboCop",
+        "image": "/images/robocop.png"
     },
     {
         "champId": "scorpion",
@@ -130,38 +135,18 @@
         "image": "/images/scorpion.png"
     },
     {
-        "champId": "shinnok",
-        "name": "Shinnok",
-        "image": "/images/shinnok.png"
+        "champId": "shang-tsung",
+        "name": "Shang Tsung",
+        "image": "/images/shang-tsung.png"
     },
     {
-        "champId": "sonya",
-        "name": "Sonya Blade",
-        "image": "/images/sonya.png"
+        "champId": "shao-kahn",
+        "name": "Shao Kahn",
+        "image": "/images/shao-kahn.png"
     },
     {
-        "champId": "sub-zero",
-        "name": "Sub-Zero",
-        "image": "/images/sub-zero.png"
-    },
-    {
-        "champId": "takeda",
-        "name": "Takeda",
-        "image": "/images/takeda.png"
-    },
-    {
-        "champId": "tanya",
-        "name": "Tanya",
-        "image": "/images/tanya.png"
-    },
-    {
-        "champId": "tremor",
-        "name": "Tremor",
-        "image": "/images/tremor.png"
-    },
-    {
-        "champId": "triborg",
-        "name": "Triborg",
-        "image": "/images/triborg.png"
+        "champId": "sheeva",
+        "name": "Sheeva",
+        "image": "/images/sheeva.png"
     }
 ]

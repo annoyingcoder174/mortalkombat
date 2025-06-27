@@ -1,17 +1,8 @@
 [
   {
-    "champId": "alien",
-    "name": "Alien",
-    "image": "/images/alien.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "bo-rai-cho",
-    "name": "Bo' Rai Cho",
-    "image": "/images/bo-rai-cho.png",
+    "champId": "baraka",
+    "name": "Baraka",
+    "image": "/images/baraka.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -27,18 +18,18 @@
     "totalGames": 0
   },
   {
-    "champId": "dvorah",
-    "name": "D'Vorah",
-    "image": "/images/dvorah.png",
+    "champId": "cetrion",
+    "name": "Cetrion",
+    "image": "/images/cetrion.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "ermac",
-    "name": "Ermac",
-    "image": "/images/ermac.png",
+    "champId": "dvorah",
+    "name": "D'Vorah",
+    "image": "/images/d'vorah.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -54,18 +45,27 @@
     "totalGames": 0
   },
   {
-    "champId": "ferra-torr",
-    "name": "Ferra/Torr",
-    "image": "/images/ferra-torr.png",
+    "champId": "frost",
+    "name": "Frost",
+    "image": "/images/frost.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "goro",
-    "name": "Goro",
-    "image": "/images/goro.png",
+    "champId": "fujin",
+    "name": "Fujin",
+    "image": "/images/fujin.png",
+    "totalPicks": 0,
+    "totalBans": 0,
+    "totalWins": 0,
+    "totalGames": 0
+  },
+  {
+    "champId": "geras",
+    "name": "Geras",
+    "image": "/images/geras.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -81,9 +81,9 @@
     "totalGames": 0
   },
   {
-    "champId": "jason",
-    "name": "Jason Voorhees",
-    "image": "/images/jason.png",
+    "champId": "jade",
+    "name": "Jade",
+    "image": "/images/jade.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -99,9 +99,27 @@
     "totalGames": 0
   },
   {
+    "champId": "john-rambo",
+    "name": "John Rambo",
+    "image": "/images/john-rambo.png",
+    "totalPicks": 0,
+    "totalBans": 0,
+    "totalWins": 0,
+    "totalGames": 0
+  },
+  {
     "champId": "johnny-cage",
     "name": "Johnny Cage",
-    "image": "/images/johnny-cage.png",
+    "image": "/images/johny-cage.png",
+    "totalPicks": 0,
+    "totalBans": 0,
+    "totalWins": 0,
+    "totalGames": 0
+  },
+  {
+    "champId": "kabal",
+    "name": "Kabal",
+    "image": "/images/kabal.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -117,18 +135,18 @@
     "totalGames": 0
   },
   {
-    "champId": "kenshi",
-    "name": "Kenshi",
-    "image": "/images/kenshi.png",
+    "champId": "kitana",
+    "name": "Kitana",
+    "image": "/images/kitana.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "kitana",
-    "name": "Kitana",
-    "image": "/images/kitana.png",
+    "champId": "kollector",
+    "name": "Kollector",
+    "image": "/images/kollector.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -144,27 +162,9 @@
     "totalGames": 0
   },
   {
-    "champId": "kung-jin",
-    "name": "Kung Jin",
-    "image": "/images/kung-jin.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
     "champId": "kung-lao",
     "name": "Kung Lao",
     "image": "/images/kung-lao.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "leatherface",
-    "name": "Leatherface",
-    "image": "/images/leatherface.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -189,18 +189,18 @@
     "totalGames": 0
   },
   {
-    "champId": "predator",
-    "name": "Predator",
-    "image": "/images/predator.png",
+    "champId": "nightwolf",
+    "name": "Nightwolf",
+    "image": "/images/nightwolf.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "quan-chi",
-    "name": "Quan Chi",
-    "image": "/images/quan-chi.png",
+    "champId": "noob-saibot",
+    "name": "Noob Saibot",
+    "image": "/images/noob-saibot.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -216,9 +216,18 @@
     "totalGames": 0
   },
   {
-    "champId": "reptile",
-    "name": "Reptile",
-    "image": "/images/reptile.png",
+    "champId": "rain",
+    "name": "Rain",
+    "image": "/images/rain.png",
+    "totalPicks": 0,
+    "totalBans": 0,
+    "totalWins": 0,
+    "totalGames": 0
+  },
+  {
+    "champId": "robocop",
+    "name": "RoboCop",
+    "image": "/images/robocop.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
@@ -234,63 +243,27 @@
     "totalGames": 0
   },
   {
-    "champId": "shinnok",
-    "name": "Shinnok",
-    "image": "/images/shinnok.png",
+    "champId": "shang-tsung",
+    "name": "Shang Tsung",
+    "image": "/images/shang-tsung.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "sonya",
-    "name": "Sonya Blade",
-    "image": "/images/sonya.png",
+    "champId": "shao-kahn",
+    "name": "Shao Kahn",
+    "image": "/images/shao-kahn.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,
     "totalGames": 0
   },
   {
-    "champId": "sub-zero",
-    "name": "Sub-Zero",
-    "image": "/images/sub-zero.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "takeda",
-    "name": "Takeda",
-    "image": "/images/takeda.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "tanya",
-    "name": "Tanya",
-    "image": "/images/tanya.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "tremor",
-    "name": "Tremor",
-    "image": "/images/tremor.png",
-    "totalPicks": 0,
-    "totalBans": 0,
-    "totalWins": 0,
-    "totalGames": 0
-  },
-  {
-    "champId": "triborg",
-    "name": "Triborg",
-    "image": "/images/triborg.png",
+    "champId": "sheeva",
+    "name": "Sheeva",
+    "image": "/images/sheeva.png",
     "totalPicks": 0,
     "totalBans": 0,
     "totalWins": 0,

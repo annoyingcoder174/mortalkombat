@@ -7,6 +7,8 @@ const socketio = require('socket.io');
 const dotenv = require('dotenv');
 const Champion = require('./models/Champion');
 const fighters = require('./utils/fighters_with_stats.json');
+const statsRoutes = require('./routes/stats'); // adjust path if needed
+
 
 dotenv.config();
 
@@ -35,6 +37,8 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.set('view engine', 'ejs');
 
+
+
 app.use(session({
     secret: process.env.SESSION_SECRET || 'secret-key',
     resave: false,
@@ -46,6 +50,7 @@ const rooms = {};
 // Routes
 app.use('/', require('./routes/auth'));
 app.use('/game', require('./routes/game')(io, rooms));
+app.use('/stats', statsRoutes);
 
 // Socket.IO logic
 io.on('connection', (socket) => {
@@ -96,11 +101,15 @@ io.on('connection', (socket) => {
         room.bannedChamps.push(champId);
         room.banSources[champId] = userId;
 
-        // ✅ Stats: increment totalBans and totalGames
-        await Champion.findOneAndUpdate(
-            { champId },
-            { $inc: { totalBans: 1, totalGames: 1 } }
-        );
+        // 🔄 Update totalBans and banRate
+        try {
+            await Champion.findOneAndUpdate(
+                { champId },
+                { $inc: { totalBans: 1, banRate: 1 } }
+            );
+        } catch (err) {
+            console.error('❌ Failed to update ban stats:', err);
+        }
 
         io.to(roomId).emit('banned', { userId, champId });
         io.to(roomId).emit('sync-state', {
@@ -128,6 +137,7 @@ io.on('connection', (socket) => {
     });
 
 
+
     socket.on('pick-champ', async ({ roomId, champId, userId }) => {
         const room = rooms[roomId];
         if (!room || room.pickedChamps.includes(champId)) return;
@@ -146,6 +156,16 @@ io.on('connection', (socket) => {
                 return;
             }
         }
+        // 📌 Increment pickRate immediately
+        try {
+            await Champion.findOneAndUpdate(
+                { champId },
+                { $inc: { pickRate: 1 } }
+            );
+        } catch (err) {
+            console.error('❌ Error updating pickRate stat:', err);
+        }
+
 
         room.pickedChamps.push(champId);
         room.picks[userId].push(champId);
@@ -153,8 +173,9 @@ io.on('connection', (socket) => {
         // ✅ Stats: increment totalPicks and totalGames
         await Champion.findOneAndUpdate(
             { champId },
-            { $inc: { totalPicks: 1, totalGames: 1 } }
-        );
+            { $inc: { pickRate: 1, totalGames: 1 } }
+        ).catch(console.error);
+
 
         io.to(roomId).emit('picked', { userId, champId });
 
@@ -195,13 +216,13 @@ io.on('connection', (socket) => {
 
     // make sure this is at the top
 
+
+
     socket.on('round-winner', async ({ roomId, winnerId }) => {
         const room = rooms[roomId];
         if (!room) return;
 
         const roundIndex = room.round - 1;
-
-        // ✅ Push actual winner's ID
         room.history.push(winnerId);
 
         io.to(roomId).emit('mark-result', {
@@ -215,39 +236,42 @@ io.on('connection', (socket) => {
             history: room.history
         });
 
-        // ✅ Stat tracking
-        const loserId = room.players.find(p => p !== winnerId);
-        const winnerChamps = room.picks[winnerId] || [];
-        const loserChamps = room.picks[loserId] || [];
+        // ✅ Stat tracking for this round only
+        try {
+            const loserId = room.players.find(p => p !== winnerId);
+            const winnerChamp = room.picks?.[winnerId]?.[roundIndex];
+            const loserChamp = room.picks?.[loserId]?.[roundIndex];
 
-        // ✅ Update WINNER champion stats
-        for (const champId of winnerChamps) {
-            await Champion.findOneAndUpdate(
-                { champId },
-                {
-                    $inc: {
-                        totalPicks: 1,
-                        totalWins: 1,
-                        totalGames: 1
+            if (winnerChamp) {
+                await Champion.findOneAndUpdate(
+                    { champId: winnerChamp },
+                    {
+                        $inc: {
+                            pickRate: 1,
+                            winRate: 1,
+                            totalWins: 1,
+                            totalGames: 1
+                        }
                     }
-                }
-            ).catch(console.error);
+                );
+            }
+
+            if (loserChamp) {
+                await Champion.findOneAndUpdate(
+                    { champId: loserChamp },
+                    {
+                        $inc: {
+                            pickRate: 1,
+                            totalGames: 1
+                        }
+                    }
+                );
+            }
+        } catch (err) {
+            console.error("❌ Failed to update stats for champions:", err);
         }
 
-        // ✅ Update LOSER champion stats
-        for (const champId of loserChamps) {
-            await Champion.findOneAndUpdate(
-                { champId },
-                {
-                    $inc: {
-                        totalPicks: 1,
-                        totalGames: 1
-                    }
-                }
-            ).catch(console.error);
-        }
-
-        // ✅ Win condition
+        // ✅ Check match win condition
         const winCondition = Math.ceil(room.format / 2);
         const winnerWins = room.history.filter(w => w === winnerId).length;
 
@@ -257,10 +281,10 @@ io.on('connection', (socket) => {
             return;
         }
 
-        // ❗ Not finished: go to next round
+        // 🔁 Continue to next round
+        const loserId = room.players.find(p => p !== winnerId);
         room.round++;
         room.phase = 'pick';
-
         room.pickOrder = [loserId, winnerId];
 
         io.to(roomId).emit('next-round', { round: room.round });
@@ -269,6 +293,9 @@ io.on('connection', (socket) => {
             phase: 'pick'
         });
     });
+
+
+
 
 
 
