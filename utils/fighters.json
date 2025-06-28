@@ -17,7 +17,7 @@
     {
         "champId": "dvorah",
         "name": "D'Vorah",
-        "image": "/images/d'vorah.png"
+        "image": "/images/dvorah.png"
     },
     {
         "champId": "erron-black",
@@ -55,14 +55,9 @@
         "image": "/images/jax.png"
     },
     {
-        "champId": "john-rambo",
-        "name": "John Rambo",
-        "image": "/images/john-rambo.png"
-    },
-    {
         "champId": "johnny-cage",
         "name": "Johnny Cage",
-        "image": "/images/johny-cage.png"
+        "image": "/images/johnny-cage.png"
     },
     {
         "champId": "kabal",
@@ -148,5 +143,45 @@
         "champId": "sheeva",
         "name": "Sheeva",
         "image": "/images/sheeva.png"
+    },
+    {
+        "champId": "sindel",
+        "name": "Sindel",
+        "image": "/images/sindel.png"
+    },
+    {
+        "champId": "skarlet",
+        "name": "Skarlet",
+        "image": "/images/skarlet.png"
+    },
+    {
+        "champId": "sonya-blade",
+        "name": "Sonya Blade",
+        "image": "/images/sonya-blade.png"
+    },
+    {
+        "champId": "spawn",
+        "name": "Spawn",
+        "image": "/images/spawn.png"
+    },
+    {
+        "champId": "sub-zero",
+        "name": "Sub-Zero",
+        "image": "/images/sub-zero.png"
+    },
+    {
+        "champId": "terminator",
+        "name": "Terminator",
+        "image": "/images/terminator.png"
+    },
+    {
+        "champId": "john-rambo",
+        "name": "John Rambo",
+        "image": "/images/john-rambo.png"
+    },
+    {
+        "champId": "joker",
+        "name": "Joker",
+        "image": "/images/joker.png"
     }
 ]

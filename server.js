@@ -8,6 +8,8 @@ const dotenv = require('dotenv');
 const Champion = require('./models/Champion');
 const fighters = require('./utils/fighters_with_stats.json');
 const statsRoutes = require('./routes/stats'); // adjust path if needed
+const { calculateEloGain, getRank } = require('./utils/rankUtils');
+
 
 
 dotenv.config();
