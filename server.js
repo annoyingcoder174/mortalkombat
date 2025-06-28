@@ -276,6 +276,23 @@ io.on('connection', (socket) => {
         const winnerWins = room.history.filter(w => w === winnerId).length;
 
         if (winnerWins >= winCondition) {
+            const [p1, p2] = room.players;
+            const p1Wins = room.history.filter(w => w === p1).length;
+            const p2Wins = room.history.filter(w => w === p2).length;
+
+            const loserId = p1 === winnerId ? p2 : p1;
+
+            const winnerScore = Math.max(p1Wins, p2Wins);
+            const loserScore = Math.min(p1Wins, p2Wins);
+            const { gain, loss } = calculateEloGain(room.format, winnerScore, loserScore);
+
+            try {
+                await User.findOneAndUpdate({ username: winnerId }, { $inc: { elo: gain } });
+                await User.findOneAndUpdate({ username: loserId }, { $inc: { elo: -loss } });
+            } catch (err) {
+                console.error("❌ Failed to update user ELO:", err);
+            }
+
             io.to(roomId).emit('match-end', { winner: winnerId });
             delete rooms[roomId];
             return;
@@ -293,6 +310,7 @@ io.on('connection', (socket) => {
             phase: 'pick'
         });
     });
+
 
 
 

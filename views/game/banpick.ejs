@@ -15,7 +15,12 @@
 
             <!-- You -->
             <div class="text-start">
-                <h5 class="text-primary">You</h5>
+                <h5 class="text-primary">
+                    You <span class="badge bg-warning text-dark">
+                        <%= userRank %>
+                    </span>
+                </h5>
+
 
                 <!-- BAN -->
                 <div class="mb-2">
@@ -59,7 +64,13 @@
             <div class="text-end">
                 <h5 class="text-danger">
                     <%= opponent || "Opponent" %>
+                        <% if (opponent) { %>
+                            <span class="badge bg-warning text-dark">
+                                <%= opponentRank %>
+                            </span>
+                            <% } %>
                 </h5>
+
 
                 <!-- BAN -->
                 <div class="mb-2">

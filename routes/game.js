@@ -41,6 +41,25 @@ module.exports = (io, rooms) => {
             res.status(500).send('Server Error');
         }
     });
+    const { getRank } = require('../utils/rankUtils');
+    const User = require('../models/User');
+
+    router.get('/menu', ensureAuth, async (req, res) => {
+        const user = await User.findOne({ username: req.session.user.username });
+
+        const availableRooms = Object.entries(rooms).map(([roomId, room]) => ({
+            roomId,
+            players: room.players,
+            format: room.format
+        }));
+
+        res.render('game/menu', {
+            user: user.username,
+            rank: getRank(user.elo),
+            availableRooms
+        });
+    });
+
 
 
 
@@ -68,25 +87,26 @@ module.exports = (io, rooms) => {
         res.redirect(`/game/room/${roomId}`);
     });
 
+
+
     router.get('/room/:roomId', ensureAuth, async (req, res) => {
         const roomId = req.params.roomId;
         const room = rooms[roomId];
         if (!room) return res.redirect('/game/menu');
 
-        const user = req.session.user.username;
-
-        if (!room.players.includes(user) && room.players.length < 2) {
-            room.players.push(user);
-            room.picks[user] = [];
-        }
-
-        const opponent = room.players.find(p => p !== user);
         const champions = await Champion.find().lean();
+        const user = req.session.user.username;
+        const opponent = room.players.find(p => p !== user);
         const isCreator = room.creator === user;
+
+        const userData = await User.findOne({ username: user });
+        const opponentData = opponent ? await User.findOne({ username: opponent }) : null;
 
         res.render('game/banpick', {
             user,
             opponent,
+            userRank: getRank(userData.elo),
+            opponentRank: opponentData ? getRank(opponentData.elo) : '---',
             roomId,
             format: room.format,
             champions,
@@ -94,6 +114,7 @@ module.exports = (io, rooms) => {
             isCreator
         });
     });
+
 
 
     router.post('/join-room/:roomId', ensureAuth, (req, res) => {
