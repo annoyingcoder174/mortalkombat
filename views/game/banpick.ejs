@@ -1,107 +1,103 @@
 <%- include('../partials/header', { user }) %>
 
-    <div id="banpick-data" data-user="<%= user %>" data-room="<%= roomId %>" data-iscreator="<%= isCreator %>"
-        data-format="<%= format %>" data-players='<%- JSON.stringify(players) %>'>
-    </div>
-    <div class="text-center mb-3">
-        <a href="/game/stats" class="btn btn-outline-warning">🏆 View Champion Stats</a>
-    </div>
+    <% function getRankClass(rank) { const name=rank.toLowerCase().split(' ')[0].replace(/[^a-z\-]/g, '');
+    return ' rank-badge ' + ' rank-' + name; } %>
 
-    <div class="container-fluid mt-4 text-white">
-        <h4 class="text-center">Room: <%= roomId %> | Format: BO<%= format %>
-        </h4>
-
-        <div class="d-flex justify-content-around my-4">
-
-            <!-- You -->
-            <div class="text-start">
-                <h5 class="text-primary">
-                    You <span class="badge bg-warning text-dark">
-                        <%= userRank %>
-                    </span>
-                </h5>
-
-
-                <!-- BAN -->
-                <div class="mb-2">
-                    <strong>BAN:</strong>
-                    <div id="ban-you" class="d-flex gap-2">
-                        <div class="ban-slot border border-danger p-2 rounded bg-dark" style="width:60px; height:60px;">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PICKS -->
-                <div>
-                    <strong>PICKS:</strong>
-                    <div id="pick-you" class="d-flex gap-2 mt-1">
-                        <% for(let i=0; i < format; i++) { %>
-                            <div class="pick-slot position-relative border border-success p-2 rounded bg-dark"
-                                style="width:60px; height:60px;"></div>
-                            <% } %>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Champ Grid (Center) -->
-            <div class="d-flex flex-column align-items-center text-center">
-                <h5 id="phase-indicator" class="mb-2">Waiting for opponent...</h5>
-                <h6 id="timer">--</h6>
-                <div class="row justify-content-center" id="champ-grid" style="max-width: 900px;">
-                    <% champions.forEach(champ=> { %>
-                        <div class="col-2 mb-3 champ-box text-center">
-                            <img src="<%= champ.image %>" data-id="<%= champ.champId %>"
-                                class="champ-img img-fluid border border-light rounded" style="cursor:pointer;">
-                            <small class="text-white">
-                                <%= champ.name %>
-                            </small>
-                        </div>
-                        <% }) %>
-                </div>
-            </div>
-
-            <!-- Opponent -->
-            <div class="text-end">
-                <h5 class="text-danger">
-                    <%= opponent || "Opponent" %>
-                        <% if (opponent) { %>
-                            <span class="badge bg-warning text-dark">
-                                <%= opponentRank %>
-                            </span>
-                            <% } %>
-                </h5>
-
-
-                <!-- BAN -->
-                <div class="mb-2">
-                    <strong>BAN:</strong>
-                    <div id="ban-opp" class="d-flex gap-2">
-                        <div class="ban-slot border border-danger p-2 rounded bg-dark" style="width:60px; height:60px;">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- PICKS -->
-                <div>
-                    <strong>PICKS:</strong>
-                    <div id="pick-opp" class="d-flex gap-2 mt-1">
-                        <% for(let i=0; i < format; i++) { %>
-                            <div class="pick-slot position-relative border border-success p-2 rounded bg-dark"
-                                style="width:60px; height:60px;"></div>
-                            <% } %>
-                    </div>
-                </div>
-            </div>
+        <div id="banpick-data" data-user="<%= user %>" data-room="<%= roomId %>" data-iscreator="<%= isCreator %>"
+            data-format="<%= format %>" data-players='<%- JSON.stringify(players) %>'>
         </div>
 
-        <!-- Win/Lose Buttons (Only for Room Creator) -->
-        <% if (isCreator) { %>
-            <div class="text-center mt-4">
-                <button id="win-btn" class="btn btn-success me-2">I Win</button>
-                <button id="lose-btn" class="btn btn-danger">I Lose</button>
-            </div>
-            <% } %>
-    </div>
+        <div class="text-center mb-3">
+            <a href="/game/stats" class="btn btn-outline-warning">🏆 View Champion Stats</a>
+        </div>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/banpick.js"></script>
+        <div class="container-fluid mt-4 text-white">
+            <h4 class="text-center">Room: <%= roomId %> | Format: BO<%= format %>
+            </h4>
+
+            <div class="d-flex justify-content-around my-4">
+                <!-- YOU -->
+                <div class="text-start">
+                    <h5 class="text-primary">
+                        You <span class="<%= getRankClass(userRank) %>">
+                            <%= userRank %>
+                        </span>
+                    </h5>
+
+                    <div class="mb-2">
+                        <strong>BAN:</strong>
+                        <div id="ban-you" class="d-flex gap-2">
+                            <div class="ban-slot border border-danger p-2 rounded bg-dark"
+                                style="width:60px; height:60px;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>PICKS:</strong>
+                        <div id="pick-you" class="d-flex gap-2 mt-1">
+                            <% for(let i=0; i < format; i++) { %>
+                                <div class="pick-slot position-relative border border-success p-2 rounded bg-dark"
+                                    style="width:60px; height:60px;"></div>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- CENTER GRID -->
+                <div class="d-flex flex-column align-items-center text-center">
+                    <h5 id="phase-indicator" class="mb-2">Waiting for opponent...</h5>
+                    <h6 id="timer">--</h6>
+                    <div class="row justify-content-center" id="champ-grid" style="max-width: 900px;">
+                        <% champions.forEach(champ=> { %>
+                            <div class="col-2 mb-3 champ-box text-center">
+                                <img src="<%= champ.image %>" data-id="<%= champ.champId %>"
+                                    class="champ-img img-fluid border border-light rounded" style="cursor:pointer;">
+                                <small class="text-white">
+                                    <%= champ.name %>
+                                </small>
+                            </div>
+                            <% }) %>
+                    </div>
+                </div>
+
+                <!-- OPPONENT -->
+                <div class="text-end">
+                    <h5 class="text-danger">
+                        <%= opponent || "Opponent" %>
+                            <% if (opponentRank) { %>
+                                <span class="<%= getRankClass(opponentRank) %>">
+                                    <%= opponentRank %>
+                                </span>
+                                <% } %>
+                    </h5>
+
+                    <div class="mb-2">
+                        <strong>BAN:</strong>
+                        <div id="ban-opp" class="d-flex gap-2">
+                            <div class="ban-slot border border-danger p-2 rounded bg-dark"
+                                style="width:60px; height:60px;"></div>
+                        </div>
+                    </div>
+
+                    <div>
+                        <strong>PICKS:</strong>
+                        <div id="pick-opp" class="d-flex gap-2 mt-1">
+                            <% for(let i=0; i < format; i++) { %>
+                                <div class="pick-slot position-relative border border-success p-2 rounded bg-dark"
+                                    style="width:60px; height:60px;"></div>
+                                <% } %>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <% if (isCreator) { %>
+                <div class="text-center mt-4">
+                    <button id="win-btn" class="btn btn-success me-2">I Win</button>
+                    <button id="lose-btn" class="btn btn-danger">I Lose</button>
+                </div>
+                <% } %>
+        </div>
+
+        <script src="/socket.io/socket.io.js"></script>
+        <script src="/js/banpick.js"></script>

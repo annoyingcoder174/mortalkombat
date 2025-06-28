@@ -1,11 +1,11 @@
 const ranks = [
-    "Kombatant",
-    "Blood Warrior",
-    "Shadow Ninja",
-    "Black Dragon",
-    "Elder Champion",
-    "God of War",
-    "Elder God"
+    "Tân Binh",
+    "Huyết Binh",
+    "Sát Thủ Đen",
+    "Rồng Đen",
+    "Quán Quân",
+    "Thần Chiến Tranh",
+    "Á Thần"
 ];
 
 function getRank(elo) {

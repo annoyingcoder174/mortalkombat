@@ -9,6 +9,7 @@ const Champion = require('./models/Champion');
 const fighters = require('./utils/fighters_with_stats.json');
 const statsRoutes = require('./routes/stats'); // adjust path if needed
 const { calculateEloGain, getRank } = require('./utils/rankUtils');
+const User = require('./models/User');
 
 
 
@@ -278,27 +279,30 @@ io.on('connection', (socket) => {
         const winnerWins = room.history.filter(w => w === winnerId).length;
 
         if (winnerWins >= winCondition) {
-            const [p1, p2] = room.players;
-            const p1Wins = room.history.filter(w => w === p1).length;
-            const p2Wins = room.history.filter(w => w === p2).length;
+            const loserId = room.players.find(p => p !== winnerId);
+            const winnerScore = room.history.filter(id => id === winnerId).length;
+            const loserScore = room.history.filter(id => id === loserId).length;
 
-            const loserId = p1 === winnerId ? p2 : p1;
-
-            const winnerScore = Math.max(p1Wins, p2Wins);
-            const loserScore = Math.min(p1Wins, p2Wins);
             const { gain, loss } = calculateEloGain(room.format, winnerScore, loserScore);
 
             try {
-                await User.findOneAndUpdate({ username: winnerId }, { $inc: { elo: gain } });
-                await User.findOneAndUpdate({ username: loserId }, { $inc: { elo: -loss } });
+                await User.findOneAndUpdate(
+                    { username: winnerId },
+                    { $inc: { elo: gain } }
+                );
+                await User.findOneAndUpdate(
+                    { username: loserId },
+                    { $inc: { elo: -loss } }
+                );
             } catch (err) {
-                console.error("❌ Failed to update user ELO:", err);
+                console.error("❌ Failed to update ELO:", err);
             }
 
             io.to(roomId).emit('match-end', { winner: winnerId });
             delete rooms[roomId];
             return;
         }
+
 
         // 🔁 Continue to next round
         const loserId = room.players.find(p => p !== winnerId);
