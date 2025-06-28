@@ -1,7 +1,7 @@
 <%- include('../partials/header', { user }) %>
 
     <% function getRankClass(rank) { const name=rank.toLowerCase().split(' ')[0].replace(/[^a-z\-]/g, '');
-    return ' rank-badge ' + ' rank-' + name; } %>
+    return ' rank-badge rank-' + name; } %>
 
         <div id="banpick-data" data-user="<%= user %>" data-room="<%= roomId %>" data-iscreator="<%= isCreator %>"
             data-format="<%= format %>" data-players='<%- JSON.stringify(players) %>'>
@@ -18,11 +18,13 @@
             <div class="d-flex justify-content-around my-4">
                 <!-- YOU -->
                 <div class="text-start">
-                    <h5 class="text-primary">
-                        You <span class="<%= getRankClass(userRank) %>">
+                    <h5>
+                        <span class="text-primary">You</span>
+                        <span class="<%= getRankClass(userRank) %>">
                             <%= userRank %>
                         </span>
                     </h5>
+
 
                     <div class="mb-2">
                         <strong>BAN:</strong>
@@ -43,10 +45,11 @@
                     </div>
                 </div>
 
-                <!-- CENTER GRID -->
+                <!-- CHAMP GRID -->
                 <div class="d-flex flex-column align-items-center text-center">
                     <h5 id="phase-indicator" class="mb-2">Waiting for opponent...</h5>
                     <h6 id="timer">--</h6>
+
                     <div class="row justify-content-center" id="champ-grid" style="max-width: 900px;">
                         <% champions.forEach(champ=> { %>
                             <div class="col-2 mb-3 champ-box text-center">
@@ -98,6 +101,66 @@
                 </div>
                 <% } %>
         </div>
+
+        <style>
+            .rank-badge {
+                padding: 4px 10px;
+                border-radius: 6px;
+                font-weight: bold;
+                font-size: 0.85rem;
+                margin-left: 6px;
+            }
+
+            .rank-tanbinh {
+                background-color: #555;
+                color: white;
+            }
+
+            .rank-huyetbinh {
+                background-color: #8aff8a;
+                color: #003300;
+            }
+
+            .rank-satthuden {
+                background-color: #9ae0ff;
+                color: #002a40;
+            }
+
+            .rank-rongden {
+                background-color: #d6b3ff;
+                color: #320047;
+            }
+
+            .rank-quanquan {
+                background-color: orange;
+                color: #4a2800;
+            }
+
+            .rank-thanchientranh {
+                background-color: #ff4d4d;
+                color: white;
+            }
+
+            .rank-athan {
+                background: linear-gradient(45deg, #e2e2e2, #c4f1ff, #ffffff, #d0e0ff);
+                color: #111;
+                animation: sparkle 2s infinite;
+                border: 1px solid #d0e0ff;
+                box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
+            }
+
+            @keyframes sparkle {
+
+                0%,
+                100% {
+                    box-shadow: 0 0 6px #a0f8ff;
+                }
+
+                50% {
+                    box-shadow: 0 0 12px #ffffff;
+                }
+            }
+        </style>
 
         <script src="/socket.io/socket.io.js"></script>
         <script src="/js/banpick.js"></script>

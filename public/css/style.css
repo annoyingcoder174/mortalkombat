@@ -326,77 +326,69 @@ body {
 }
 
 .rank-badge {
-    padding: 5px 12px;
-    border-radius: 8px;
+    padding: 4px 10px;
+    border-radius: 6px;
     font-weight: bold;
     font-size: 0.85rem;
+    margin-left: 8px;
     display: inline-block;
-    border: 2px solid transparent;
-    box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
-    transition: all 0.3s ease-in-out;
-    animation: pulse-glow 2s infinite ease-in-out;
-    text-transform: uppercase;
-    letter-spacing: 0.5px;
 }
 
-/* Mortal Kombat Themed Rank Colors */
-.rank-kombatant {
-    background: #2d2d2d;
-    color: #ccc;
-    border-color: #444;
+/* Rank Color Themes */
+.rank-tanbinh {
+    background-color: #555;
+    color: white;
+    border: 1px solid #666;
 }
 
-.rank-blood {
-    background: #8b0000;
-    color: #fff;
-    border-color: #ff1a1a;
+.rank-huyetbinh {
+    background-color: #b3ffb3;
+    color: #003300;
+    border: 1px solid #66cc66;
 }
 
-.rank-shadow {
-    background: #000428;
-    color: #8ed6ff;
-    border-color: #004e92;
+.rank-satthuden {
+    background-color: #c2e9ff;
+    color: #003344;
+    border: 1px solid #66b2ff;
 }
 
-.rank-black {
-    background: #1a1a1a;
-    color: #ffcc00;
-    border-color: #b30000;
+.rank-rongden {
+    background-color: #e0ccff;
+    color: #320047;
+    border: 1px solid #b580ff;
 }
 
-.rank-elder {
-    background: #003300;
-    color: #33ff33;
-    border-color: #00cc66;
+.rank-quanquan {
+    background-color: orange;
+    color: #4a2800;
+    border: 1px solid #ff9900;
 }
 
-.rank-god {
-    background: #4b0082;
-    color: #ffd700;
-    border-color: #ff8c00;
+.rank-thanchientranh {
+    background-color: #ff4d4d;
+    color: white;
+    border: 1px solid #cc0000;
 }
 
-.rank-eldergod {
-    background: linear-gradient(90deg, #e52d27, #b31217);
-    color: #fff;
-    border-color: #ff0000;
-    box-shadow: 0 0 15px #ff3333, 0 0 5px #ff3333 inset;
+/* Á Thần: Flashy Platinum with Animation */
+.rank-athan {
+    background: linear-gradient(45deg, #e2e2e2, #c4f1ff, #ffffff, #d0e0ff);
+    color: #111;
+    animation: sparkle 2s infinite;
+    border: 1px solid #d0e0ff;
+    box-shadow: 0 0 6px rgba(255, 255, 255, 0.7);
 }
 
-/* Pulse Animation */
-@keyframes pulse-glow {
-    0% {
-        transform: scale(1);
-        box-shadow: 0 0 8px rgba(255, 0, 0, 0.2);
+/* Sparkle Animation */
+@keyframes sparkle {
+
+    0%,
+    100% {
+        box-shadow: 0 0 6px #a0f8ff;
     }
 
     50% {
-        transform: scale(1.05);
-        box-shadow: 0 0 15px rgba(255, 0, 0, 0.4);
-    }
-
-    100% {
-        transform: scale(1);
-        box-shadow: 0 0 8px rgba(255, 0, 0, 0.2);
+        box-shadow: 0 0 12px #ffffff;
     }
 }

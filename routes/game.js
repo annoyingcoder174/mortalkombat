@@ -137,3 +137,14 @@ module.exports = (io, rooms) => {
 
     return router;
 };
+function getRankBadgeClass(rankName) {
+    if (rankName.includes('Tân Binh')) return 'rank-tanbinh';
+    if (rankName.includes('Huyết Binh')) return 'rank-huyetbinh';
+    if (rankName.includes('Sát Thủ')) return 'rank-satthuden';
+    if (rankName.includes('Rồng Đen')) return 'rank-rongden';
+    if (rankName.includes('Quán Quân')) return 'rank-quanquan';
+    if (rankName.includes('Thần Chiến Tranh')) return 'rank-thanchientranh';
+    if (rankName.includes('Á Thần')) return 'rank-athan';
+    return '';
+}
+

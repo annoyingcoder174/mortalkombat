@@ -219,8 +219,6 @@ io.on('connection', (socket) => {
 
     // make sure this is at the top
 
-
-
     socket.on('round-winner', async ({ roomId, winnerId }) => {
         const room = rooms[roomId];
         if (!room) return;
@@ -239,7 +237,7 @@ io.on('connection', (socket) => {
             history: room.history
         });
 
-        // ✅ Stat tracking for this round only
+        // ✅ Stat tracking
         try {
             const loserId = room.players.find(p => p !== winnerId);
             const winnerChamp = room.picks?.[winnerId]?.[roundIndex];
@@ -271,31 +269,25 @@ io.on('connection', (socket) => {
                 );
             }
         } catch (err) {
-            console.error("❌ Failed to update stats for champions:", err);
+            console.error("❌ Failed to update stats:", err);
         }
 
-        // ✅ Check match win condition
+        // ✅ Check match result
         const winCondition = Math.ceil(room.format / 2);
         const winnerWins = room.history.filter(w => w === winnerId).length;
 
         if (winnerWins >= winCondition) {
             const loserId = room.players.find(p => p !== winnerId);
-            const winnerScore = room.history.filter(id => id === winnerId).length;
-            const loserScore = room.history.filter(id => id === loserId).length;
+            const winnerScore = room.history.filter(w => w === winnerId).length;
+            const loserScore = room.history.filter(w => w === loserId).length;
 
             const { gain, loss } = calculateEloGain(room.format, winnerScore, loserScore);
 
             try {
-                await User.findOneAndUpdate(
-                    { username: winnerId },
-                    { $inc: { elo: gain } }
-                );
-                await User.findOneAndUpdate(
-                    { username: loserId },
-                    { $inc: { elo: -loss } }
-                );
+                await User.findOneAndUpdate({ username: winnerId }, { $inc: { elo: gain } });
+                await User.findOneAndUpdate({ username: loserId }, { $inc: { elo: -loss } });
             } catch (err) {
-                console.error("❌ Failed to update ELO:", err);
+                console.error('❌ Error updating ELO:', err);
             }
 
             io.to(roomId).emit('match-end', { winner: winnerId });
@@ -303,8 +295,7 @@ io.on('connection', (socket) => {
             return;
         }
 
-
-        // 🔁 Continue to next round
+        // 🔁 Next round
         const loserId = room.players.find(p => p !== winnerId);
         room.round++;
         room.phase = 'pick';
@@ -316,6 +307,7 @@ io.on('connection', (socket) => {
             phase: 'pick'
         });
     });
+
 
 
 
