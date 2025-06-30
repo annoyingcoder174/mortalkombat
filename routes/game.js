@@ -106,13 +106,16 @@ module.exports = (io, rooms) => {
             user,
             opponent,
             userRank: getRank(userData.elo),
+            userElo: userData.elo,
             opponentRank: opponentData ? getRank(opponentData.elo) : '---',
+            opponentElo: opponentData ? opponentData.elo : 0,
             roomId,
             format: room.format,
             champions,
             players: room.players,
             isCreator
         });
+
     });
 
 

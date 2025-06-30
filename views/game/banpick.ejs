@@ -18,12 +18,13 @@
             <div class="d-flex justify-content-around my-4">
                 <!-- YOU -->
                 <div class="text-start">
-                    <h5>
-                        <span class="text-primary">You</span>
+                    <h5 class="text-primary">
+                        You
                         <span class="<%= getRankClass(userRank) %>">
-                            <%= userRank %>
+                            <%= userRank %> (<%= userElo %> ELO)
                         </span>
                     </h5>
+
 
 
                     <div class="mb-2">
@@ -69,7 +70,7 @@
                         <%= opponent || "Opponent" %>
                             <% if (opponentRank) { %>
                                 <span class="<%= getRankClass(opponentRank) %>">
-                                    <%= opponentRank %>
+                                    <%= opponentRank %> (<%= opponentElo %> ELO)
                                 </span>
                                 <% } %>
                     </h5>
