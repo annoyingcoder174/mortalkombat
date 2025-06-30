@@ -32,7 +32,14 @@ function calculateEloGain(format, winnerScore, loserScore) {
             "4-1": [70, 55],
             "4-2": [50, 35],
             "4-3": [30, 25]
-        }
+        },
+        9: {
+            "5-0": [150, 120],
+            "5-1": [120, 100],
+            "5-2": [95, 80],
+            "5-3": [75, 60],
+            "5-4": [55, 40]
+        },
     };
 
     const key = `${winnerScore}-${loserScore}`;
