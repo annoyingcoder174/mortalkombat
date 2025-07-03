@@ -1,11 +1,11 @@
 const ranks = [
-    "Tân Binh",
-    "Huyết Binh",
-    "Sát Thủ Đen",
-    "Rồng Đen",
-    "Quán Quân",
-    "Thần Chiến Tranh",
-    "Á Thần"
+    "Tân Binh",           // 0–399
+    "Huyết Binh",         // 400–799
+    "Sát Thủ Đen",        // 800–1199
+    "Rồng Đen",           // 1200–1599
+    "Quán Quân",          // 1600–1999
+    "Thần Chiến Tranh",  // 2000–2399
+    "Á Thần"              // 2400+
 ];
 
 function getRank(elo) {
@@ -39,7 +39,7 @@ function calculateEloGain(format, winnerScore, loserScore) {
             "5-2": [95, 80],
             "5-3": [75, 60],
             "5-4": [55, 40]
-        },
+        }
     };
 
     const key = `${winnerScore}-${loserScore}`;

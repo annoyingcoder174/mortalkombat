@@ -217,15 +217,17 @@ io.on('connection', (socket) => {
     });
 
 
-    // make sure this is at the top
-
     socket.on('round-winner', async ({ roomId, winnerId }) => {
         const room = rooms[roomId];
         if (!room) return;
 
         const roundIndex = room.round - 1;
+        const loserId = room.players.find(p => p !== winnerId);
+
+        // Save winner to history
         room.history.push(winnerId);
 
+        // Broadcast updated round result to clients
         io.to(roomId).emit('mark-result', {
             winnerId,
             roundIndex,
@@ -237,9 +239,8 @@ io.on('connection', (socket) => {
             history: room.history
         });
 
-        // ✅ Stat tracking
+        // ✅ Champion stat tracking (1 champ per round)
         try {
-            const loserId = room.players.find(p => p !== winnerId);
             const winnerChamp = room.picks?.[winnerId]?.[roundIndex];
             const loserChamp = room.picks?.[loserId]?.[roundIndex];
 
@@ -272,20 +273,47 @@ io.on('connection', (socket) => {
             console.error("❌ Failed to update stats:", err);
         }
 
-        // ✅ Check match result
-        const winCondition = Math.ceil(room.format / 2);
+        // ✅ Determine win condition manually (BO3/5/7/9)
+        let winCondition = 0;
+        switch (room.format) {
+            case 3: winCondition = 2; break;
+            case 5: winCondition = 3; break;
+            case 7: winCondition = 4; break;
+            case 9: winCondition = 5; break;
+            default: winCondition = Math.ceil(room.format / 2);
+        }
+
         const winnerWins = room.history.filter(w => w === winnerId).length;
 
         if (winnerWins >= winCondition) {
-            const loserId = room.players.find(p => p !== winnerId);
-            const winnerScore = room.history.filter(w => w === winnerId).length;
-            const loserScore = room.history.filter(w => w === loserId).length;
+            // Match ends, calculate ELO and update DB
+            const winnerScore = winnerWins;
+            const loserScore = room.history.length - winnerScore;
 
-            const { gain, loss } = calculateEloGain(room.format, winnerScore, loserScore);
+            const { gain: baseGain, loss: baseLoss } = calculateEloGain(room.format, winnerScore, loserScore);
 
             try {
-                await User.findOneAndUpdate({ username: winnerId }, { $inc: { elo: gain } });
-                await User.findOneAndUpdate({ username: loserId }, { $inc: { elo: -loss } });
+                const [winnerUser, loserUser] = await Promise.all([
+                    User.findOne({ username: winnerId }),
+                    User.findOne({ username: loserId })
+                ]);
+
+                let finalGain = baseGain;
+                let finalLoss = baseLoss;
+
+                if (winnerUser && loserUser) {
+                    const eloGap = loserUser.elo - winnerUser.elo;
+                    if (eloGap >= 400) {
+                        const bonus = Math.floor(eloGap * 0.05);
+                        finalGain += bonus;
+                        finalLoss += bonus;
+                    }
+
+                    await Promise.all([
+                        User.findOneAndUpdate({ username: winnerId }, { $inc: { elo: finalGain } }),
+                        User.findOneAndUpdate({ username: loserId }, { $inc: { elo: -finalLoss } })
+                    ]);
+                }
             } catch (err) {
                 console.error('❌ Error updating ELO:', err);
             }
@@ -295,11 +323,10 @@ io.on('connection', (socket) => {
             return;
         }
 
-        // 🔁 Next round
-        const loserId = room.players.find(p => p !== winnerId);
+        // 🔁 Move to next round
         room.round++;
         room.phase = 'pick';
-        room.pickOrder = [loserId, winnerId];
+        room.pickOrder = [loserId, winnerId]; // loser picks first
 
         io.to(roomId).emit('next-round', { round: room.round });
         io.to(roomId).emit('your-turn', {
@@ -307,6 +334,7 @@ io.on('connection', (socket) => {
             phase: 'pick'
         });
     });
+
 
 
 
